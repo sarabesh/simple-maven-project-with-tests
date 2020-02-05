@@ -2,7 +2,9 @@ node {
    def mvnHome
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
-      properties([buildDiscarder(logRotator(daysToKeepStr:'3', numToKeepStr:'3'))])
+      properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'EnhancedOldBuildDiscarder',
+ artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '10', numToKeepStr: '10',
+ discardOnlyOnSuccess: false, holdMaxBuilds: true]]]);
       git 'https://github.com/jglick/simple-maven-project-with-tests.git'
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
